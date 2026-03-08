@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.page-center {
+  min-height: calc(100vh - 80px); /* navbar height subtract */
+  width: 100%;
+
+  display: flex;
+  justify-content: center;   /* horizontal center */
+  align-items: center;       /* vertical center */
+
+  text-align: center;
+}
+
+/* SaaS style content box */
+.center-box {
+  max-width: 700px;
+  padding: 40px;
+
+  border-radius: 14px;
+
+  background: rgb(232, 226, 226);
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* heading */
+.center-box h3 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+/* subtitle */
+.center-box p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* button style */
+.center-box button {
+  margin-top: 30px;
+  padding: 12px 28px;
+
+  font-weight: 600;
+
+  border-radius: 8px;
+}

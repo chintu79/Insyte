@@ -1,0 +1,43 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 3rem;
+ background-color: #cddcf4;
+  color: white;
+  height: 80px;
+  /* width: 100%; full width */
+  width: 100vw;        /* full viewport width */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;          /* full width of AppBar */
+  padding: 0 2rem;      /* horizontal spacing */
+  box-sizing: border-box;
+}
+.navbar-title {
+  font-size: 5rem;
+  font-weight: 700;
+}
+
+.navbar-links .nav-button {
+  color: #FF6F00; /* accent color */
+  text-decoration: none;
+  margin-left: 1rem;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+
+.navbar-links .nav-button:hover {
+  background-color: rgba(255,111,0,0.2);
+}
+.page-container {
+  padding-top: 80px;  /* Navbar height ke barabar */
+  width: 100vw;
+}

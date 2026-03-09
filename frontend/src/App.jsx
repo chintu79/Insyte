@@ -1,24 +1,23 @@
 import React from 'react'
-// import { useState } from 'react'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
 import './App.css'
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Home from './Pages/Home';      // Home page will build next
-import Upload from "./Pages/Upload";   // Upload page will build later
+import Home from './Pages/Home';      // Home page
+import Upload from "./Pages/Upload";   // Upload page
+import Result from './Pages/Result';   // Result page
 
 function App() {
   return (
     <>
       <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/upload" element={<Upload />} />
-      </Routes>
-    </BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/upload" element={<Upload />} />
+          <Route path="/result" element={<Result />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }

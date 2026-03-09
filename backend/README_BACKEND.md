@@ -2,11 +2,9 @@ FastAPI backend for DataInsights.
 Handles dataset uploads and returns preview data.
 
 🚀 Run the Server
-pip install -r requirements.txt
+pip install -r requirements.txtgit push origin yogesh
 python app.py
-
 Server runs at:
-
 http://localhost:8000
 📁 Folder Structure
 backend/

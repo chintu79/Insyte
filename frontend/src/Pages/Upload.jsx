@@ -1,20 +1,21 @@
 import { useState } from "react";
 import { Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function Upload() {
   const [file, setFile] = useState(null);
-  const [error, setError] = useState("");       // error message state
-  const [data, setData] = useState([]);         // backend preview rows
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   // File select handler
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
-    setError("");  // reset error
-    setData([]);   // clear previous table
+    setError("");
   };
 
-  // Upload button handler (async for backend fetch)
+  // Upload button handler
   const handleUpload = async () => {
     if (!file) {
       setError("⚠ Please select a file before uploading!");
@@ -23,6 +24,7 @@ export default function Upload() {
 
     const formData = new FormData();
     formData.append("file", file);
+    setIsLoading(true);
 
     try {
       const response = await fetch("http://localhost:8000/upload", {
@@ -31,21 +33,24 @@ export default function Upload() {
       });
 
       const result = await response.json();
-      console.log(result);  // check backend JSON
+      console.log("EDA Pipeline Output:", result);
 
-      if (result.error) {
-        setError("⚠ " + result.error);
-        setData([]);
+      if (result.dataset_summary && result.dataset_summary.error) {
+        setError("⚠ " + result.dataset_summary.error);
+        setIsLoading(false);
         return;
       }
 
-      setData(result.preview);  // show first 5 rows
-      setError("");             // clear error
+      setError("");
+      setIsLoading(false);
+      
+      // Navigate to the results page and push data into react router state
+      navigate("/result", { state: { edaReport: result, fileName: file.name } });
 
     } catch (err) {
       console.error("Upload failed:", err);
-      setError("⚠ Upload failed. Please try again!");
-      setData([]);
+      setError("⚠ Upload failed. Please check if the backend is running!");
+      setIsLoading(false);
     }
   };
 
@@ -61,6 +66,7 @@ export default function Upload() {
           type="file"
           accept=".csv, .xlsx"
           onChange={handleFileChange}
+          disabled={isLoading}
         />
 
         {file && (
@@ -75,43 +81,19 @@ export default function Upload() {
           </p>
         )}
 
-        <Button
-          variant="contained"
-          sx={{ mt: 3 }}
-          onClick={handleUpload}
-        >
-          Upload File
-        </Button>
-
-        {/* SaaS-style preview table */}
-        {data.length > 0 && (
-          <table style={{ marginTop: 20, width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-              <tr>
-                {Object.keys(data[0]).map((col) => (
-                  <th key={col} style={{
-                    border: "1px solid #ccc",
-                    padding: "8px",
-                    backgroundColor: "#f5f5f5",
-                    fontWeight: 600
-                  }}>
-                    {col}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {data.map((row, index) => (
-                <tr key={index}>
-                  {Object.values(row).map((val, i) => (
-                    <td key={i} style={{ border: "1px solid #ccc", padding: "8px" }}>
-                      {val}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        {isLoading ? (
+          <p style={{ color: "#1976d2", marginTop: "15px", fontWeight: 600 }}>
+            Analyzing Dataset... This may take a moment.
+          </p>
+        ) : (
+          <Button
+            variant="contained"
+            sx={{ mt: 3 }}
+            onClick={handleUpload}
+            disabled={!file}
+          >
+            Run EDA Pipeline
+          </Button>
         )}
 
       </div>

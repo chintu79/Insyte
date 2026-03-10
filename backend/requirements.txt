@@ -6,3 +6,6 @@ matplotlib
 seaborn
 python-dateutil
 six
+scikit-learn
+openpyxl
+joblib

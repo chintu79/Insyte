@@ -2,10 +2,13 @@ FastAPI backend for DataInsights.
 Handles dataset uploads and returns preview data.
 
 🚀 Run the Server
-pip install -r requirements.txtgit push origin yogesh
+cd backend
 python app.py
+pip install -r requirements.txt
+python -m uvicorn app:app --reload
 Server runs at:
 http://localhost:8000
+
 📁 Folder Structure
 backend/
 │

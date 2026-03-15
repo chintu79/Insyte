@@ -1,16 +1,12 @@
 
 import { useState } from "react";
 import { Typography, Button } from "@mui/material";
-<<<<<<< HEAD
-import { useNavigate } from "react-router-dom";
 
 export default function Upload() {
-  const [eda, setEda] = useState(null);
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-=======
   const [data, setData] = useState([]);
   const [isDragActive, setIsDragActive] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -42,28 +38,6 @@ export default function Upload() {
       });
 
       const result = await response.json();
-<<<<<<< HEAD
-      console.log("EDA Pipeline Output:", result);
-
-      if (result.dataset_summary && result.dataset_summary.error) {
-        setError("⚠ " + result.dataset_summary.error);
-        return;
-      }
-
-      if (result.preview) {
-        setData(result.preview);
-      }
-
-      setError("");
-
-      navigate("/result", {
-        state: { edaReport: result, fileName: file.name }
-      });
-
-    } catch (err) {
-      console.error("Upload failed:", err);
-      setError("⚠ Upload failed. Please check if the backend is running!");
-      setIsLoading(false);
     }
   };
 
@@ -111,6 +85,6 @@ export default function Upload() {
         )}
 
       </div>
-    </div>
+    </>
   );
 }

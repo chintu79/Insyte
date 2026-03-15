@@ -5,19 +5,22 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from './Pages/Home';      // Home page
 import Upload from "./Pages/Upload";   // Upload page
-import Result from './Pages/Result';   // Result page
+import Dashboard from "./Pages/Dashboard";
+import { DatasetProvider } from "./context/DatasetContext";
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/upload" element={<Upload />} />
-          <Route path="/result" element={<Result />} />
-        </Routes>
-      </BrowserRouter>
+      <DatasetProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/upload" element={<Upload />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
+        </BrowserRouter>
+      </DatasetProvider>
     </>
   )
 }

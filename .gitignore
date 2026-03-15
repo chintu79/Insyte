@@ -1,0 +1,17 @@
+# Dataset storage — never commit user uploads or trained models
+storage/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# Node
+node_modules/
+frontend/dist/
+
+# ML artifacts
+*.joblib
+*.pkl
+*.h5

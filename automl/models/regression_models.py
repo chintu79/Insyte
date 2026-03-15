@@ -1,16 +1,12 @@
-from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression, Ridge, Lasso
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 
 
-def split_data(df, target_column, test_size=0.2):
-
-    X = df.drop(columns=[target_column])
-    y = df[target_column]
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X,
-        y,
-        test_size=test_size,
-        random_state=42
-    )
-
-    return X_train, X_test, y_train, y_test
+def get_regression_models():
+    """Return a dict of regression models to train and compare."""
+    models = {
+        "linear_regression":    LinearRegression(),
+        "random_forest":        RandomForestRegressor(n_estimators=100, random_state=42),
+        "gradient_boosting":    GradientBoostingRegressor(random_state=42),
+    }
+    return models

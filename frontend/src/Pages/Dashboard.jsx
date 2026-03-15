@@ -42,13 +42,15 @@
  *   5. Prediction     — sliders + dropdowns on real data ranges
  */
 
-// const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
-
-// VITE_API_URL="4d7c-2401-4900-c0aa-e4fe-934-3509-eb9d-ab7a.ngrok-free.app/"
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDataset } from "../context/DatasetContext";
+
+// Base URL for all API calls.
+// In development: set VITE_API_URL in your .env file (defaults to localhost).
+// For ngrok: set VITE_API_URL=https://your-ngrok-url.ngrok.io in .env, then
+// rebuild with `npm run build` or restart the dev server.
+const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Utility helpers
@@ -507,14 +509,14 @@ export default function Dashboard() {
     try { await fn(); } catch (e) { setError(e.message); } finally { setRunning(false); }
   };
 
-  const runEda    = () => run(async () => setEdaResult(await post("http://localhost:8000/eda", { dataset_id: datasetId })));
-  const runFe     = () => run(async () => setFeResult(await post("http://localhost:8000/feature-engineering", { dataset_id: datasetId })));
+  const runEda    = () => run(async () => setEdaResult(await post(`${API}/eda`, { dataset_id: datasetId })));
+  const runFe     = () => run(async () => setFeResult(await post(`${API}/feature-engineering`, { dataset_id: datasetId })));
 
   // FIX 2: After AutoML runs, also hydrate feResult from the automl response
   // so fe_log, target_column, and problem_type are available even if the user
   // skipped the separate /feature-engineering step.
   const runAutoml = () => run(async () => {
-    const result = await post("http://localhost:8000/automl", { dataset_id: datasetId });
+    const result = await post(`${API}/automl`, { dataset_id: datasetId });
     setAutomlResult(result);
     // Hydrate feResult from automl response if not already set
     if (!feResult && result.fe_log) {
@@ -1034,7 +1036,7 @@ function PredictPanel({ datasetId, schema, edaResult, feResult, automlResult }) 
   const predict = async () => {
     setLoading(true); setErr(""); setResult(null);
     try {
-      const r = await fetch("http://localhost:8000/predict", {
+      const r = await fetch(`${API}/predict`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ dataset_id: datasetId, inputs: values }),
